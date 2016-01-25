@@ -67,7 +67,7 @@ First of all, [Rupture](http://jenius.github.io/rupture/) is a great tool, but d
 			another-property value
 	```
 
-- Rupture uses [scale indices](http://jenius.github.io/rupture/#measure) to identify a breakpoint, making difficult to know which breakpoint is at stake, and if a breakpoint is added or removed, it can completely change the index of each breakpoint. With Mantis Querist you name each breakpoint with the name you feel convenient. See the [configuration](#configuring) section.
+- Rupture uses [scale indices](http://jenius.github.io/rupture/#measure) to identify a breakpoint, making difficult to know which breakpoint is at stake, and if a breakpoint is added or removed, it can completely change the index of each breakpoint. You also can pass the [scale name](https://github.com/jenius/rupture#rupturescale-names), but you've to keep two variables in sync to avoid problems with indices. With Mantis Querist you name each breakpoint with the name you feel convenient in the same variable. See the [configuration](#configuration) section.
 
 
 Installation
@@ -113,10 +113,52 @@ The installation can be done in 3 steps:
 	```
 
 
-Configuring
------------
+Configuration
+-------------
 
-Mantis Querist has a variable named `$breakpoints`...
+Mantis Querist has a [hash](http://stylus-lang.com/docs/hashes.html) named `$breakpoints` that comes with some predefined breakpoints:
+
+```styl
+$breakpoints ?= {
+	sm: 0, // small
+	md: 640, // medium
+	lg: 960, // large
+}
+```
+
+You can add, remove or modify breakpoints just changing the `$breakpoints` variable. Examples:
+
+**Adding or changing**
+```styl
+$breakpoints.xl = 1440 // extra large
+$breakpoints.fl = 1920 // fucking large
+
+// or
+
+$my-breakpoints = {
+	xl: 1440,
+	fl: 1920
+}
+merge($breakpoints, $my-breakpoints)
+// => {"sm":"(0)","md":"(640)","lg":"(960)","xl":"(1440)","fl":"(1920)"}
+```
+
+**Removing existing**
+```styl
+remove($breakpoints, 'lg')
+// => {"lg", "(960)"}
+```
+
+**Or simply replace**
+```styl
+$breakpoints = {
+	foo: 123,
+	bar: 456,
+	baz: 789
+}
+```
+
+Something **very important** is that breakpoints must be in ascending order, otherwise the media queries will not work as expected.
 
 
 Functions
@@ -141,30 +183,61 @@ Mantis Querist has 4 handy functions, they are: `from`, `to`, `at` and `between`
 │                 ├───────────────────────────────────┤
 ```
 
-#### `from(breakpoint)`
+#### `from(breakpoint[, $type])`
 
-The `from(breakpoint)` is like `(min-width: breakpoint)`
-
-
-#### `to(breakpoint)`
-
-The `to(breakpoint)` is like `(max-width: breakpoint)`
+The `from()` is like `(min-width: breakpoint)`
 
 
-#### `at(breakpoint)`
+#### `to(breakpoint[, $type])`
 
-The `at(breakpoint)` is like `(min-width: breakpoint) and (max-width: next-breakpoint)`
+The `to()` is like `(max-width: breakpoint)`
 
 
-#### `between(min-breakpoint, max-breakpoint)`
+#### `at(breakpoint[, $type])`
 
-The `between(min-breakpoint, max-breakpoint)` is like `(min-width: min-breakpoint) and (max-width: max-breakpoint)`
+The `at()` is like `(min-width: breakpoint) and (max-width: next-breakpoint)`
+
+
+#### `between(min-breakpoint, max-breakpoint[, $type])`
+
+The `between()` is like `(min-width: min-breakpoint) and (max-width: max-breakpoint)`
+
+The `$type` parameter is the `media type`, it's set to `'screen'` by default, but you can change specifically in each function or directly in the configuration variable `$mantis-querist.type`. Set to false, will omit the media type from the media query.
 
 
 Usage
 -----
 
-...
+Once properly set up Mantis Querist, is very simple to use. See some examples:
+
+```styl
+.element-a
+	background black
+
+	@media from('md')
+		background red
+
+	@media from('lg')
+		background green
+
+.element-b
+	float left
+
+	@media to('sm')
+		float none
+		display block
+
+.element-c
+	position relative
+
+	@media between('md', 'lg', $type: 'tv')
+		position absolute
+```
+
+Questions?
+----------
+
+If you've questions, issues or ideas, feel free to [tweet me](https://twitter.com/acauamontiel) or talk to me through some of my contacts on my [website](http://acauamontiel.com.br/).
 
 
 License
