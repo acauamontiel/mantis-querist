@@ -1,0 +1,54 @@
+$breakpoints ?= {
+	sm: 0, // small
+	md: 640, // medium
+	lg: 960, // large
+	xl: 1440, // extra large
+	fl: 1920 // fucking large
+}
+
+$mantis-querist ?= {
+	overlap: false,
+	type: 'screen'
+}
+
+bp-index($bp)
+	return key-index($breakpoints, $bp)
+
+join-media-query($mq)
+	return $mq
+
+query(args..., $type = $mantis-querist.type)
+	$fn-name = fn-name()
+	$mq = $type ? 'only ' + $type : ''
+
+	if $fn-name is 'to'
+		$min = keys($breakpoints)[0]
+		$max = args[0]
+	else if $fn-name is 'from'
+		$min = args[0]
+		$max = keys($breakpoints)[length($breakpoints) - 1]
+	else if $fn-name is 'at'
+		$min = args[0]
+		$max = keys($breakpoints)[bp-index($min)]
+	else if $fn-name is 'between'
+		$min = args[0]
+		$max = args[1]
+
+	unless bp-index($min) is 0
+		unless $mq is ''
+			$mq += ' and '
+
+		$mq += '(min-width: ' + $breakpoints[$min] + 'px)'
+
+	$next = bp-index($max) + 1
+
+	unless $next is length($breakpoints)
+		$max = keys($breakpoints)[$next]
+		unless $mq is ''
+			$mq += ' and '
+
+		$mq += '(max-width: ' + $breakpoints[$max] + 'px)'
+
+	return $mq
+
+from = to = at = between = query
