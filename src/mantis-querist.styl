@@ -1,6 +1,7 @@
 $mantis ?= {}
 $mantis.querist = {
 	overlap: false,
+	unit: 'px',
 	type: 'screen',
 	breakpoints: {
 		sm: 0,
@@ -28,6 +29,7 @@ query(args..., $type = $mantis.querist.type)
 	$fn-name = fn-name()
 	$mq = join-media-query($type: $type)
 	$breakpoints = $mantis.querist.breakpoints
+	$unit = $mantis.querist.unit
 
 	if $fn-name is 'to'
 		$min = keys($breakpoints)[0]
@@ -43,13 +45,13 @@ query(args..., $type = $mantis.querist.type)
 		$max = args[1]
 
 	unless bp-index($min) is 0
-		$mq = join-media-query($mq, $feature: '(min-width: ' + $breakpoints[$min] + 'px)')
+		$mq = join-media-query($mq, $feature: '(min-width: ' + $breakpoints[$min] + $unit + ')')
 
 	$next = bp-index($max) + 1
 
 	unless $next is length($breakpoints)
 		$max = keys($breakpoints)[$next]
-		$mq = join-media-query($mq, $feature: '(max-width: ' + $breakpoints[$max] + 'px)')
+		$mq = join-media-query($mq, $feature: '(max-width: ' + $breakpoints[$max] + $unit + ')')
 
 	return $mq
 
