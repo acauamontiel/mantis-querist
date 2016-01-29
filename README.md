@@ -57,7 +57,7 @@ First of all, [Rupture](http://jenius.github.io/rupture/) is a great tool, but d
 
 	```styl
 	$mobile = to('md')
-	$mobile-portrait = $mobile + ' and (orientation: portrait)'
+	$mobile-portrait = join-media-query($mobile, $feature: '(orientation: portrait)')
 
 	.element
 		@media $mobile
@@ -116,22 +116,22 @@ The installation can be done in 3 steps:
 Configuration
 -------------
 
-Mantis Querist has a [hash](http://stylus-lang.com/docs/hashes.html) named `$breakpoints` that comes with some predefined breakpoints:
+Mantis Querist has a [hash](http://stylus-lang.com/docs/hashes.html) named `$mantis.querist.breakpoints` that comes with some predefined breakpoints:
 
 ```styl
-$breakpoints ?= {
+$mantis.querist.breakpoints ?= {
 	sm: 0, // small
 	md: 640, // medium
 	lg: 960, // large
 }
 ```
 
-You can add, remove or modify breakpoints just changing the `$breakpoints` variable. Examples:
+You can add, remove or modify breakpoints just changing the `$mantis.querist.breakpoints` variable. Examples:
 
 **Adding or changing**
 ```styl
-$breakpoints.xl = 1440 // extra large
-$breakpoints.fl = 1920 // fucking large
+$mantis.querist.breakpoints.xl = 1440 // extra large
+$mantis.querist.breakpoints.fl = 1920 // fucking large
 
 // or
 
@@ -139,19 +139,19 @@ $my-breakpoints = {
 	xl: 1440,
 	fl: 1920
 }
-merge($breakpoints, $my-breakpoints)
+merge($mantis.querist.breakpoints, $my-breakpoints)
 // => {"sm":"(0)","md":"(640)","lg":"(960)","xl":"(1440)","fl":"(1920)"}
 ```
 
 **Removing existing**
 ```styl
-remove($breakpoints, 'lg')
+remove($mantis.querist.breakpoints, 'lg')
 // => {"lg", "(960)"}
 ```
 
 **Or simply replace**
 ```styl
-$breakpoints = {
+$mantis.querist.breakpoints = {
 	foo: 123,
 	bar: 456,
 	baz: 789
@@ -202,7 +202,9 @@ The `at()` is like `(min-width: breakpoint) and (max-width: next-breakpoint)`
 
 The `between()` is like `(min-width: min-breakpoint) and (max-width: max-breakpoint)`
 
-The `$type` parameter is the `media type`, it's set to `'screen'` by default, but you can change specifically in each function or directly in the configuration variable `$mantis-querist.type`. Set to false, will omit the media type from the media query.
+The `$type` parameter is the `media type`, it's set to `'screen'` by default, but you can change specifically in each function or directly in the configuration variable `$mantis.querist.type`. Set to false, will omit the media type from the media query.
+
+There are other configuration variables in the `$mantis.querist` hash, like `$mantis.querist.unit`, that's defined as `'px'`, but you can change to the unit you want.
 
 
 Usage
