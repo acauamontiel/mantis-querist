@@ -22,6 +22,7 @@ First of all, [Rupture](http://jenius.github.io/rupture/) is a great tool, but d
 
 
 	**This is worse...**
+
 	```styl
 	header
 	footer
@@ -38,6 +39,7 @@ First of all, [Rupture](http://jenius.github.io/rupture/) is a great tool, but d
 	```
 
 	**...than this**
+
 	```styl
 	header
 	footer
