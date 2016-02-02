@@ -43,13 +43,13 @@ First of all, [Rupture](http://jenius.github.io/rupture/) is a great tool, but d
 	footer
 		some-property value
 
-		@media print
+		+media(print)
 			display none
 
 	.element
 		some-property value
 
-		@media from('lg')
+		+media(from('lg'))
 			another-property value
 	```
 
@@ -216,23 +216,23 @@ Once properly set up Mantis Querist, is very simple to use. See some examples:
 .element-a
 	background black
 
-	@media from('md')
+	+media(from('md'))
 		background red
 
-	@media from('lg')
+	+media(from('lg'))
 		background green
 
 .element-b
 	float left
 
-	@media to('sm')
+	+media(to('sm'))
 		float none
 		display block
 
 .element-c
 	position relative
 
-	@media between('md', 'lg', $type: 'tv')
+	+media(between('md', 'lg', $type: 'tv'))
 		position absolute
 ```
 

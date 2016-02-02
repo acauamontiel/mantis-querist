@@ -10,6 +10,10 @@ $mantis.querist = {
 	}
 }
 
+media($query)
+	@media $query
+		{block}
+
 bp-index($bp)
 	return key-index($mantis.querist.breakpoints, $bp)
 
