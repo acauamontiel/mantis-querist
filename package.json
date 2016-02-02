@@ -1,6 +1,6 @@
 {
   "name": "mantis-querist",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "A smart and practical way to handle breakpoints in Stylus",
   "main": "index.js",
   "scripts": {
