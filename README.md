@@ -166,7 +166,7 @@ Something **very important** is that breakpoints must be in ascending order, oth
 Functions
 ---------
 
-Mantis Querist has 4 handy functions, they are: `from`, `to`, `at` and `between`.
+Mantis Querist has 4 main handy functions, they are: `from`, `to`, `at` and `between`.
 
 ```
 │        sm                md                lg                xl
@@ -237,6 +237,50 @@ Once properly set up Mantis Querist, is very simple to use. See some examples:
 	+media(between('md', 'lg', $type: 'tv'))
 		position absolute
 ```
+
+You also can use this way, without `+media()`:
+
+```styl
+.element-a
+	background black
+
+	@media $from.md
+		background red
+
+	@media $from.lg
+		background green
+
+.element-b
+	float left
+
+	@media $to.sm
+		float none
+		display block
+
+.element-c
+	position relative
+
+	@media $between.md.lg
+		position absolute
+```
+
+All you need to do is run `querist-init()`, and this will generate a hash for each of the 4 main functions with all possible combinations. Example:
+
+```styl
+$from.sm = from('sm')
+$from.md = from('md')
+$from.lg = from('lg')
+$to.sm = to('sm')
+$to.md = to('md')
+$to.lg = to('lg')
+$at.sm = at('sm')
+$at.md = at('md')
+$at.lg = at('lg')
+$between.sm.md = between('sm', 'md')
+$between.sm.lg = between('sm', 'lg')
+$between.md.lg = between('md', 'lg')
+```
+
 
 Questions?
 ----------

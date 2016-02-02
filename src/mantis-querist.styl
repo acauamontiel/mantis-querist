@@ -9,10 +9,29 @@ $mantis.querist = {
 		lg: 960
 	}
 }
+$from = {}
+$to = {}
+$at = {}
+$between = {}
 
 media($query)
 	@media $query
 		{block}
+
+querist-init()
+	$breakpoints = keys($mantis.querist.breakpoints)
+	$length = length($breakpoints)
+
+	for $bp, $i in $breakpoints
+		$from[$bp] = from($bp)
+		$to[$bp] = to($bp)
+		$at[$bp] = at($bp)
+
+		unless $i is ($length - 1)
+			$between[$bp] = {}
+
+			for $n in ($i + 1)..($length - 1)
+				($between[$bp][$breakpoints[$n]] = between($bp, $breakpoints[$n]))
 
 bp-index($bp)
 	return key-index($mantis.querist.breakpoints, $bp)
