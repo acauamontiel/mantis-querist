@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:mantisjs/mantis-querist.git"
+    "url": "git@github.com:acauamontiel/mantis-querist.git"
   },
   "keywords": [
     "breakpoint",
@@ -19,9 +19,9 @@
   "author": "Acauã Montiel <contato@acauamontiel.com.br>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mantisjs/mantis-querist/issues"
+    "url": "https://github.com/acauamontiel/mantis-querist/issues"
   },
-  "homepage": "https://github.com/mantisjs/mantis-querist",
+  "homepage": "https://github.com/acauamontiel/mantis-querist",
   "dependencies": {
     "stylus": "^0.53.0"
   }
